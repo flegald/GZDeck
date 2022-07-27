@@ -5,6 +5,7 @@ import ModList from '../../components/ModList';
 import { LaunchBar } from '../../components/LaunchBar';
 import Container from 'react-bootstrap/Container';
 import { SettingsInterface } from './types';
+import { useTranslation } from 'react-i18next';
 
 export const Launch = (props: {
   mods: string[];
@@ -13,6 +14,7 @@ export const Launch = (props: {
 }): ReactElement => {
   const [selectedMods, setSelectedMods] = useState<string[]>([]);
   const [selectedIwad, setSelectedIwad] = useState<string>('');
+  const { t, ready } = useTranslation('common', { useSuspense: false });
   const { mods, iwads, settings } = props;
 
   useEffect(() => {
@@ -37,13 +39,13 @@ export const Launch = (props: {
           <ModList
             onSelect={updateSelectedMods}
             mods={mods}
-            title="Available Mods"
+            title={t('ACTIVE_MODS')}
           />
         </Col>
         <Col>
           <ModList
             mods={selectedMods}
-            title="Active Mods"
+            title={t("ACTIVE_MODS")}
             onSelect={updateSelectedMods}
           />
         </Col>

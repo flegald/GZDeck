@@ -3,6 +3,7 @@ import Row from 'react-bootstrap/Row';
 import { Button } from 'react-bootstrap';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
+import { useTranslation } from 'react-i18next';
 
 export const LaunchBar = (props: {
   iwads: string[];
@@ -11,6 +12,7 @@ export const LaunchBar = (props: {
   selectedMods: string[];
 }): ReactElement => {
   const { iwads, setSelectedIwad, selectedMods, selectedIwad } = props;
+  const { t } = useTranslation('common', { useSuspense: false });
 
   const startEngine = () => {
     window.Main.startEngine(selectedMods, selectedIwad);
@@ -40,7 +42,7 @@ export const LaunchBar = (props: {
 
       <Col>
         <Button style={{ width: '100%' }} onClick={() => startEngine()}>
-          Launch
+          {t('LAUNCH')}
         </Button>
       </Col>
     </Row>

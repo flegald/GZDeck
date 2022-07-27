@@ -1,5 +1,6 @@
 import { contextBridge, ipcRenderer } from 'electron'
 import {
+  FLATPAK_LIST_COMMAND,
   FLATPAK_RUN_COMMAND,
   GZDOOM_PATH,
   MOD_PATH,
@@ -10,12 +11,13 @@ import {
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
-const { exec } = require("child_process");
+const exec = require('await-exec');
 
 export const api = {
 
-  sendMessage: (message: string) => {
-    ipcRenderer.send('message', message)
+  engineSearch: async () => {
+    const response = await exec(FLATPAK_LIST_COMMAND)
+    return !!response.stdout
   },
 
   writeSettings: async (settings: object) => {
@@ -52,9 +54,6 @@ export const api = {
     exec(command.join(' '))
   },
 
-  /**
-   * Provide an easier way to listen to events
-   */
   on: (channel: string, callback: Function) => {
     ipcRenderer.on(channel, (_, data) => callback(data))
   }
