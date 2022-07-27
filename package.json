@@ -70,8 +70,8 @@
   "config": {
     "forge": {
       "packagerConfig": {
-        "name": "Electron starter",
-        "executableName": "electron-starter",
+        "name": "GZDeck",
+        "executableName": "gzdeck",
         "icon": "assets/icon",
         "extraResource": [
           "assets"
