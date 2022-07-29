@@ -1,12 +1,13 @@
 {
   "name": "gzdeck",
+  "productName": "GZDeck",
   "author": "David Flegal",
   "version": "1.0.0",
   "description": "A GZDoom launcher for steam deck",
   "main": "./.webpack/main/index.js",
   "scripts": {
-    "start": "electron-forge start",
-    "package": "electron-forge package",
+    "start": "NODE_ENV=development; electron-forge start",
+    "package": "NODE_ENV=production; electron-forge package && electron-builder build --linux AppImage",
     "make": "electron-forge make",
     "release": "electron-forge publish",
     "lint": "eslint . --ext js,ts",
@@ -39,6 +40,7 @@
     "@types/jest": "26.0.23",
     "@types/react": "17.0.11",
     "@types/react-dom": "17.0.8",
+    "@types/react-gamepad": "^1.0.3",
     "@types/styled-components": "5.1.10",
     "@typescript-eslint/eslint-plugin": "4.27.0",
     "@typescript-eslint/parser": "4.27.0",
@@ -48,6 +50,8 @@
     "cross-env": "7.0.3",
     "css-loader": "^6.7.1",
     "electron": "^19.0.0",
+    "electron-builder": "^23.1.0",
+    "electron-packager": "^15.5.1",
     "eslint": "7.29.0",
     "eslint-config-prettier": "8.3.0",
     "eslint-config-standard": "16.0.3",
@@ -63,7 +67,7 @@
     "npm-run-all": "4.1.5",
     "prettier": "2.3.1",
     "react-bootstrap": "^2.4.0",
-    "react-gamepads": "^1.0.0",
+    "react-gamepad": "github:SBRK/react-gamepad",
     "react-i18next": "^11.18.3",
     "react-loading-overlay-ts": "^2.0.0",
     "style-loader": "^3.3.1",
@@ -104,10 +108,7 @@
       ],
       "makers": [
         {
-          "name": "@electron-forge/maker-zip",
-          "platforms": [
-            "linux"
-          ]
+          "name": "@electron-forge/maker-flatpak"
         }
       ]
     }

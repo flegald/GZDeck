@@ -3,5 +3,10 @@
   "INSTALL_GZDOOM": "Please install GZDoom via the Discovery app,",
   "ACTIVE_MODS": "Active Mods",
   "AVAILABLE_MODS": "Available Mods",
-  "LAUNCH": "Launch"
+  "LAUNCH": "Launch",
+  "SELECTED_IWAD": "Selected IWAD",
+  "SET_IWAD": "Set IWAD",
+  "NONE": "None",
+  "AVAILABLE_IWADS": "Available IWADS",
+  "OK": "Ok"
 }

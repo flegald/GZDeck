@@ -1,4 +1,4 @@
-import { Spinner, ThemeProvider } from 'react-bootstrap';
+import { Spinner } from 'react-bootstrap';
 import { AppHeader } from './components/AppHeader';
 import { Launch } from './screens/Launch';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -8,7 +8,11 @@ import { SettingsInterface } from './screens/Launch/types';
 import ErrorAlert from './components/ErrorAlert';
 import { useTranslation } from 'react-i18next';
 import LoadingOverlay from 'react-loading-overlay-ts';
+import './index.css';
 import './i18n';
+import Container from 'react-bootstrap/Container';
+import Controller from './components/Controller';
+import useFocusableElements from './components/hooks/focusableElements';
 
 export function App() {
   const [iwads, setIwads] = useState<string[]>([]);
@@ -17,6 +21,12 @@ export function App() {
   const [engineInstalled, setEngineInstalled] = useState<boolean>(false);
   const [isInitialized, setIsInitialized] = useState<boolean>(false);
   const { t, ready } = useTranslation('common', { useSuspense: false });
+  const { getFocusableElements, handleInput } =
+    useFocusableElements();
+
+  const initFileStructure = () => {
+    window.Main.initFileStructure();
+  };
 
   const engineSearch = async (): Promise<void> => {
     setEngineInstalled(await window.Main.engineSearch());
@@ -39,10 +49,12 @@ export function App() {
 
   const initApp = async (): Promise<void> => {
     setIsInitialized(false);
+    initFileStructure();
     await engineSearch();
     await fetchSettings();
     await iwadSearch();
     await modSearch();
+    getFocusableElements();
     setIsInitialized(true);
   };
 
@@ -51,11 +63,14 @@ export function App() {
   }, []);
 
   return (
-    <ThemeProvider>
+    <Container>
+      <Controller
+        handleInput={handleInput}
+      />
       <AppHeader />
       <LoadingOverlay
         active={!isInitialized || !ready}
-        styles={{ wrapper: { height: '100%' } }}
+        styles={{ wrapper: { height: '93%' } }}
         spinner={<Spinner animation="border" />}
       >
         {!engineInstalled && isInitialized && (
@@ -65,9 +80,9 @@ export function App() {
           />
         )}
         {settings && engineInstalled && (
-          <Launch mods={mods} iwads={iwads} settings={settings} />
+          <Launch mods={mods} iwads={iwads} settings={settings} getFocusableElements={getFocusableElements}/>
         )}
       </LoadingOverlay>
-    </ThemeProvider>
+    </Container>
   );
 }

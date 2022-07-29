@@ -11,11 +11,12 @@ export const Launch = (props: {
   mods: string[];
   iwads: string[];
   settings: SettingsInterface;
+  getFocusableElements: () => void;
 }): ReactElement => {
   const [selectedMods, setSelectedMods] = useState<string[]>([]);
   const [selectedIwad, setSelectedIwad] = useState<string>('');
-  const { t, ready } = useTranslation('common', { useSuspense: false });
-  const { mods, iwads, settings } = props;
+  const { t } = useTranslation('common', { useSuspense: false });
+  const { mods, iwads, settings, getFocusableElements } = props;
 
   useEffect(() => {
     if (settings.previousRun.iwad) {
@@ -31,31 +32,35 @@ export const Launch = (props: {
       ? setSelectedMods(selectedMods.filter(m => m !== chosenMod))
       : setSelectedMods(selectedMods.concat([chosenMod]));
   };
-
   return (
-    <Container style={{ height: '100%' }}>
+    <Container style={{ height: '100%' }} className="application">
       <Row style={{ minHeight: '75%' }}>
-        <Col>
+        <Col style={{ maxHeight: '35em', overflowY: 'scroll' }}>
           <ModList
+            selectedMods={selectedMods}
+            inputCategory='left'
             onSelect={updateSelectedMods}
             mods={mods}
-            title={t('ACTIVE_MODS')}
+            title={t('AVAILABLE_MODS')}
           />
         </Col>
-        <Col>
+        <Col style={{ maxHeight: '35em', overflowY: 'scroll' }}>
           <ModList
+            selectedMods={selectedMods}
+            inputCategory='right'
             mods={selectedMods}
-            title={t("ACTIVE_MODS")}
+            title={t('ACTIVE_MODS')}
             onSelect={updateSelectedMods}
           />
         </Col>
       </Row>
-
+      <br />
       <LaunchBar
         iwads={iwads}
         selectedMods={selectedMods}
         selectedIwad={selectedIwad}
         setSelectedIwad={setSelectedIwad}
+        getFocusableElements={getFocusableElements}
       />
     </Container>
   );

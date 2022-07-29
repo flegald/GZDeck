@@ -1,3 +1,7 @@
 import ReactDOM from "react-dom";
 import { App } from "./App";
-ReactDOM.render(<App />, document.getElementById("root"));
+import background from './assets/images/FQJ4izH.png'
+ReactDOM.render(
+  <div style={{backgroundImage: `url(${background})`}}>
+  <App />
+  </div>, document.getElementById("root"));
