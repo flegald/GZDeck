@@ -4,6 +4,11 @@ A Mod Launcher for GZDoom flatpak version, specifically targeting the Steam Deck
 
 ![gzdeck-capture](https://user-images.githubusercontent.com/14855999/182043123-313d2a04-ef9a-4e8b-9d0b-5b468d915cd3.png)
 
+## Features
+
+* Specifically targets flatpak version of GZDoom.
+* Controller support
+* Keeps track of last ran suite of mods
 
 ## Usage
 
