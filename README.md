@@ -26,6 +26,8 @@ A Mod Launcher for GZDoom flatpak version, specifically targeting the Steam Deck
 
 ![gzdeck-capture-2](https://user-images.githubusercontent.com/14855999/182043412-50a243d4-7b74-4923-a66d-e5f2962ef96b.png)
 
+[BUG REPORTING](https://github.com/flegald/GZDeck/issues)
+
 Notes:
 ---
 I recommend setting up GZDoom first with a mouse and keyboard for first time launch.
