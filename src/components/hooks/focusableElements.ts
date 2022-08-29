@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export const useFocusableElements = () => {
+export const useGamepadInput = () => {
   const [focusedElem, setFocusedElem] = useState<any>(0);
   const [currFocusIdx, setCurrFocusIdx] = useState<number>(0);
   const [elemsModList, setElemsModList] = useState<any>();
@@ -8,7 +8,10 @@ export const useFocusableElements = () => {
   const [launchButton, setLaunchButton] = useState<any>();
   const [exitButton, setExitButton] = useState<any>();
 
-  const getFocusableElements = (useModal: boolean = false, hardCodedElem: string | boolean = false): void => {
+  const getFocusableElements = (
+    useModal: boolean = false,
+    hardCodedElem: string | boolean = false
+  ): void => {
     const modList = document.querySelectorAll('[data-inputcategory="left"]');
     const exitButton = document.querySelectorAll('[data-inputcategory="exit"]');
     const modal = useModal
@@ -24,7 +27,7 @@ export const useFocusableElements = () => {
     if (hardCodedElem) {
       if (hardCodedElem === 'iwad') {
         setCurrFocusIdx(modList.length - 1);
-        setFocusedElem(modList[modList.length - 1])
+        setFocusedElem(modList[modList.length - 1]);
       }
     }
   };
@@ -71,10 +74,12 @@ export const useFocusableElements = () => {
         }
         break;
       case 'DPadRight':
+        if (elemsModal.length) return;
         setCurrFocusIdx(elemsModList.length - 1);
         setFocusedElem(launchButton);
         break;
       case 'DPadLeft':
+        if (elemsModal.length) return;
         if (focusedElem === launchButton) {
           setFocusedElem(elemsModList[currFocusIdx]);
         } else if (focusedElem === exitButton) {
@@ -98,4 +103,4 @@ export const useFocusableElements = () => {
   };
 };
 
-export default useFocusableElements;
+export default useGamepadInput;

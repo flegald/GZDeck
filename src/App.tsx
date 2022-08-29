@@ -12,7 +12,8 @@ import './index.css';
 import './i18n';
 import Container from 'react-bootstrap/Container';
 import Controller from './components/Controller';
-import useFocusableElements from './components/hooks/focusableElements';
+import useGamepadInput from './components/hooks/focusableElements';
+import { AppStateProvider } from './Providers/AppState/AppState';
 
 export function App() {
   const [iwads, setIwads] = useState<string[]>([]);
@@ -21,8 +22,7 @@ export function App() {
   const [engineInstalled, setEngineInstalled] = useState<boolean>(false);
   const [isInitialized, setIsInitialized] = useState<boolean>(false);
   const { t, ready } = useTranslation('common', { useSuspense: false });
-  const { getFocusableElements, handleInput } =
-    useFocusableElements();
+  const { getFocusableElements, handleInput } = useGamepadInput();
 
   const initFileStructure = () => {
     window.Main.initFileStructure();
@@ -63,26 +63,31 @@ export function App() {
   }, []);
 
   return (
-    <Container>
-      <Controller
-        handleInput={handleInput}
-      />
-      <AppHeader />
-      <LoadingOverlay
-        active={!isInitialized || !ready}
-        styles={{ wrapper: { height: '93%' } }}
-        spinner={<Spinner animation="border" />}
-      >
-        {!engineInstalled && isInitialized && (
-          <ErrorAlert
-            errorTitle={t('GZDOOM_NOT_FOUND')}
-            errorBody={t('INSTALL_GZDOOM')}
-          />
-        )}
-        {settings && engineInstalled && (
-          <Launch mods={mods} iwads={iwads} settings={settings} getFocusableElements={getFocusableElements}/>
-        )}
-      </LoadingOverlay>
-    </Container>
+    <AppStateProvider>
+      <Container>
+        <Controller handleInput={handleInput} />
+        <AppHeader />
+        <LoadingOverlay
+          active={!isInitialized || !ready}
+          styles={{ wrapper: { height: '93%' } }}
+          spinner={<Spinner animation="border" />}
+        >
+          {!engineInstalled && isInitialized && (
+            <ErrorAlert
+              errorTitle={t('GZDOOM_NOT_FOUND')}
+              errorBody={t('INSTALL_GZDOOM')}
+            />
+          )}
+          {settings && engineInstalled && (
+            <Launch
+              mods={mods}
+              iwads={iwads}
+              settings={settings}
+              getFocusableElements={getFocusableElements}
+            />
+          )}
+        </LoadingOverlay>
+      </Container>
+    </AppStateProvider>
   );
 }
