@@ -5,6 +5,7 @@ import Col from 'react-bootstrap/Col';
 import { useTranslation } from 'react-i18next';
 import IwadModal from '../IwadModal';
 import Spinner from 'react-bootstrap/Spinner';
+import { useAppState } from '../../Providers/AppState/AppState';
 
 export const LaunchBar = (props: {
   iwads: string[];
@@ -16,23 +17,32 @@ export const LaunchBar = (props: {
   const [launchDisabled, setLaunchDisabled] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
   const { iwads, setSelectedIwad, selectedMods, selectedIwad, getFocusableElements } = props;
+  const {setAppState, appState} = useAppState();
   const { t } = useTranslation('common', { useSuspense: false });
 
   const startEngine = async () => {
     setLaunchDisabled(true);
-    await window.Main.startEngine(selectedMods, selectedIwad);
-    window.Main.writeSettings({
-      previousRun: {
-        iwad: selectedIwad,
-        mods: selectedMods,
-      },
-      savedConfigs: [],
-    });
+    await setAppState({setAppState: setAppState, appState: {inputDisabled: true}})
+    try {
+      await window.Main.startEngine(selectedMods, selectedIwad);
+      await window.Main.writeSettings({
+        previousRun: {
+          iwad: selectedIwad,
+          mods: selectedMods,
+        },
+        savedConfigs: [],
+      });
+    } catch (e) {
+      alert(e)
+    }
     setLaunchDisabled(false);
+    await setAppState({setAppState: setAppState, appState: {inputDisabled: false}})
   };
 
   useEffect(() => {
-    getFocusableElements(showModal, 'iwad');
+    if (!appState.inputDisabled) {
+      getFocusableElements(showModal, 'iwad');
+    }
   }, [showModal]);
 
   return (

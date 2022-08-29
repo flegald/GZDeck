@@ -4,4 +4,5 @@ export interface ModListProps {
   selectedMods: string[];
   onSelect?:(m: string) => void;
   inputCategory: string;
+  getFocusableElements: () => void;
 }

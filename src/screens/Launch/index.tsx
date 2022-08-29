@@ -28,15 +28,17 @@ export const Launch = (props: {
   }, [settings]);
 
   const updateSelectedMods = (chosenMod: string): void => {
-    selectedMods.includes(chosenMod)
-      ? setSelectedMods(selectedMods.filter(m => m !== chosenMod))
-      : setSelectedMods(selectedMods.concat([chosenMod]));
+    const cleanedTitle = chosenMod.replace('[+] ', '').replace('[-] ', '');
+    selectedMods.includes(cleanedTitle)
+      ? setSelectedMods(selectedMods.filter(m => m !== cleanedTitle))
+      : setSelectedMods(selectedMods.concat([cleanedTitle]));
   };
   return (
     <Container style={{ height: '100%' }} className="application">
       <Row style={{ minHeight: '75%' }}>
         <Col style={{ maxHeight: '35em', overflowY: 'scroll' }}>
           <ModList
+            getFocusableElements={getFocusableElements}
             selectedMods={selectedMods}
             inputCategory='left'
             onSelect={updateSelectedMods}
@@ -46,6 +48,7 @@ export const Launch = (props: {
         </Col>
         <Col style={{ maxHeight: '35em', overflowY: 'scroll' }}>
           <ModList
+            getFocusableElements={getFocusableElements}
             selectedMods={selectedMods}
             inputCategory='right'
             mods={selectedMods}

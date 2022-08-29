@@ -38,3 +38,11 @@ html * {
     border: 3px solid rgb(13, 6, 10);
     font-weight: bolder !important;
 }
+
+.add-icon {
+    color: green !important;
+}
+
+.remove {
+    color: red !important;
+}
