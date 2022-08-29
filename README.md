@@ -2,7 +2,7 @@
 
 A Mod Launcher for GZDoom flatpak version, specifically targeting the Steam Deck
 
-![gzdeck-capture](https://user-images.githubusercontent.com/14855999/182043123-313d2a04-ef9a-4e8b-9d0b-5b468d915cd3.png)
+![gzdeckgrab](https://user-images.githubusercontent.com/14855999/187118856-defdd4dc-e214-4c2f-8b78-b4599575d92e.png)
 
 ## Features
 
@@ -24,7 +24,7 @@ A Mod Launcher for GZDoom flatpak version, specifically targeting the Steam Deck
 * Browse to extracted directory and add the AppImage
 * **In Steam's launch arguments you need to add `--no-sandbox`**
 
-![gzdeckgrab](https://user-images.githubusercontent.com/14855999/187118777-dc091264-37aa-44c6-8541-2202a965e83a.png)
+![gzdeckgrab2](https://user-images.githubusercontent.com/14855999/187119028-788135e7-33b8-4c47-bfc3-e0f39c37ce81.png)
 
 
 [BUG REPORTING](https://github.com/flegald/GZDeck/issues)
