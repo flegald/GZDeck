@@ -14,10 +14,13 @@ import Container from 'react-bootstrap/Container';
 import Controller from './components/Controller';
 import useGamepadInput from './components/hooks/focusableElements';
 import { AppStateProvider } from './Providers/AppState/AppState';
+import { ModFile } from './types';
 
 export function App() {
+  const [currPath, setCurrPath] = useState<string>('/mods');
   const [iwads, setIwads] = useState<string[]>([]);
-  const [mods, setMods] = useState<string[]>([]);
+  const [mods, setMods] = useState<ModFile[]>([]);
+  const [childFolders, setChildFolders] = useState<string[]>([]);
   const [settings, setSettings] = useState<SettingsInterface>();
   const [engineInstalled, setEngineInstalled] = useState<boolean>(false);
   const [isInitialized, setIsInitialized] = useState<boolean>(false);
@@ -38,13 +41,36 @@ export function App() {
   };
 
   const modSearch = async (): Promise<void> => {
-    const results = await window.Main.fileSearch('/mods');
-    setMods(results);
+    const results = await window.Main.fileSearch(currPath);
+    const acceptsMods = filterAcceptedFileTypes(results);
+    setMods(
+      results
+        .filter(f => acceptsMods.includes(f))
+        .map(f => ({ name: f, path: `${currPath}/${f}` }))
+    );
   };
+
+  const childFolderSearch = async (): Promise<void> => {
+    const results = await window.Main.folderSearch(currPath);
+    setChildFolders(results);
+  };
+
 
   const fetchSettings = async () => {
     const results = await window.Main.initSettings();
     setSettings(results);
+  };
+
+  const updateContents = async () => {
+    await modSearch();
+    await childFolderSearch();
+  };
+
+  const updateCurrPath = (name: string, forward = true) => {
+    const newPath = forward
+      ? `${currPath}/${name}`
+      : currPath.split('/').slice(0, -1).join('/');
+    setCurrPath(newPath);
   };
 
   const initApp = async (): Promise<void> => {
@@ -53,7 +79,7 @@ export function App() {
     await engineSearch();
     await fetchSettings();
     await iwadSearch();
-    await modSearch();
+    await updateContents();
     getFocusableElements();
     setIsInitialized(true);
   };
@@ -61,6 +87,10 @@ export function App() {
   useEffect(() => {
     initApp();
   }, []);
+
+  useEffect(() => {
+    updateContents();
+  }, [currPath]);
 
   return (
     <AppStateProvider>
@@ -80,6 +110,9 @@ export function App() {
           )}
           {settings && engineInstalled && (
             <Launch
+              currPath={currPath}
+              updateCurrPath={updateCurrPath}
+              childFolders={childFolders}
               mods={mods}
               iwads={iwads}
               settings={settings}

@@ -1,17 +1,18 @@
 import { ReactElement, useEffect, useState } from 'react';
 import Row from 'react-bootstrap/Row';
-import { Button, Card } from 'react-bootstrap';
+import { Button, Card, Container } from 'react-bootstrap';
 import Col from 'react-bootstrap/Col';
 import { useTranslation } from 'react-i18next';
 import IwadModal from '../IwadModal';
 import Spinner from 'react-bootstrap/Spinner';
 import { useAppState } from '../../Providers/AppState/AppState';
+import { ModFile } from '../../types';
 
 export const LaunchBar = (props: {
   iwads: string[];
   selectedIwad: string;
   setSelectedIwad: (i: string) => void;
-  selectedMods: string[];
+  selectedMods: ModFile[];
   getFocusableElements: (b: boolean, elem: string) => void;
 }): ReactElement => {
   const [launchDisabled, setLaunchDisabled] = useState<boolean>(false);
@@ -24,7 +25,7 @@ export const LaunchBar = (props: {
     setLaunchDisabled(true);
     await setAppState({setAppState: setAppState, appState: {inputDisabled: true}})
     try {
-      await window.Main.startEngine(selectedMods, selectedIwad);
+      await window.Main.startEngine(selectedMods.map(f => f.path), selectedIwad);
       await window.Main.writeSettings({
         previousRun: {
           iwad: selectedIwad,
@@ -46,7 +47,7 @@ export const LaunchBar = (props: {
   }, [showModal]);
 
   return (
-    <>
+    <Container style={{position: 'fixed', bottom: '20px'}}>
       <IwadModal
         showModal={showModal}
         setShowModal={setShowModal}
@@ -76,26 +77,20 @@ export const LaunchBar = (props: {
         <Col>
           <Button
             data-inputcategory='launch'
-            className='custom-button'
+            className='launch-button'
             disabled={launchDisabled}
-            style={{ width: '100%', height: '80%', fontSize: '48px' }}
+            style={{ width: '90%', height: '80%', fontSize: '48px', backgroundColor: 'black', color: 'white !important'}}
             onClick={() => startEngine()}
           >
             {launchDisabled ? (
-              <Spinner
-                as="span"
-                animation="border"
-                size="sm"
-                role="status"
-                aria-hidden="true"
-              />
+              <Spinner animation="border" variant="danger" />
             ) : (
               t('LAUNCH')
             )}
           </Button>
         </Col>
       </Row>
-    </>
+    </Container>
   );
 };
 
