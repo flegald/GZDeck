@@ -25,6 +25,19 @@ html * {
     font-weight: bolder;
 }
 
+.launch-button {
+    color: #9A6666 !important;
+    background: rgb(13, 6, 10);
+    border: 1px solid #9A6666;
+}
+
+.launch-button:focus, .launch-button:hover {
+    color: white !important;
+    background: #9A6666;
+    border: 1px solid rgb(13, 6, 10);
+    font-weight: bolder;
+}
+
 .list-group-item.active {
     background: #9A6666 !important;
     color: white !important;
