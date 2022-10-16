@@ -17,15 +17,27 @@ export const LaunchBar = (props: {
 }): ReactElement => {
   const [launchDisabled, setLaunchDisabled] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
-  const { iwads, setSelectedIwad, selectedMods, selectedIwad, getFocusableElements } = props;
-  const {setAppState, appState} = useAppState();
+  const {
+    iwads,
+    setSelectedIwad,
+    selectedMods,
+    selectedIwad,
+    getFocusableElements,
+  } = props;
+  const { setAppState, appState } = useAppState();
   const { t } = useTranslation('common', { useSuspense: false });
 
   const startEngine = async () => {
     setLaunchDisabled(true);
-    await setAppState({setAppState: setAppState, appState: {inputDisabled: true}})
+    await setAppState({
+      setAppState: setAppState,
+      appState: { inputDisabled: true },
+    });
     try {
-      await window.Main.startEngine(selectedMods.map(f => f.path), selectedIwad);
+      await window.Main.startEngine(
+        selectedMods.map(f => `${f.path}`),
+        selectedIwad
+      );
       await window.Main.writeSettings({
         previousRun: {
           iwad: selectedIwad,
@@ -34,10 +46,13 @@ export const LaunchBar = (props: {
         savedConfigs: [],
       });
     } catch (e) {
-      alert(e)
+      alert(e);
     }
     setLaunchDisabled(false);
-    await setAppState({setAppState: setAppState, appState: {inputDisabled: false}})
+    await setAppState({
+      setAppState: setAppState,
+      appState: { inputDisabled: false },
+    });
   };
 
   useEffect(() => {
@@ -47,7 +62,7 @@ export const LaunchBar = (props: {
   }, [showModal]);
 
   return (
-    <Container style={{position: 'fixed', bottom: '20px'}}>
+    <Container style={{ position: 'fixed', bottom: '20px' }}>
       <IwadModal
         showModal={showModal}
         setShowModal={setShowModal}
@@ -57,14 +72,14 @@ export const LaunchBar = (props: {
       />
       <Row style={{ height: '10rem' }}>
         <Col>
-          <Card style={{ height: '80%' }} className='transparent-item'>
+          <Card style={{ height: '80%' }} className="transparent-item">
             <Card.Header>
               {t('SELECTED_IWAD')}: {selectedIwad || t('NONE')}
             </Card.Header>
             <Card.Body>
               <Button
-                data-inputcategory='left'
-                className='custom-button'
+                data-inputcategory="left"
+                className="custom-button"
                 style={{ width: '100%', height: '100%' }}
                 onClick={() => setShowModal(true)}
               >
@@ -76,10 +91,16 @@ export const LaunchBar = (props: {
 
         <Col>
           <Button
-            data-inputcategory='launch'
-            className='launch-button'
+            data-inputcategory="launch"
+            className="launch-button"
             disabled={launchDisabled}
-            style={{ width: '90%', height: '80%', fontSize: '48px', backgroundColor: 'black', color: 'white !important'}}
+            style={{
+              width: '90%',
+              height: '80%',
+              fontSize: '48px',
+              backgroundColor: 'black',
+              color: 'white !important',
+            }}
             onClick={() => startEngine()}
           >
             {launchDisabled ? (
