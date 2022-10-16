@@ -75,7 +75,7 @@ export const api = {
     const iwadFull = `${GZDOOM_PATH}/${iwad}`;
     const modPrefix = `${GZDOOM_PATH}`;
     const command = [FLATPAK_RUN_COMMAND, `-iwad ${iwadFull}`];
-    modList.forEach(m => command.push(`-file ${path.join(modPrefix, m)}`));
+    modList.forEach(m => command.push(`-file "${path.join(modPrefix, m)}"`));
     await exec(command.join(' '));
   },
 
