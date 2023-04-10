@@ -93,7 +93,7 @@ export const LaunchBar = (props: {
           <Button
             data-inputcategory="launch"
             className="launch-button"
-            disabled={launchDisabled}
+            disabled={launchDisabled || !selectedIwad}
             style={{
               width: '90%',
               height: '80%',

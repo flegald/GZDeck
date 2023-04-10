@@ -86,7 +86,7 @@ export const ModList = (props: ModListProps): ReactElement => {
   }, [titleList, childFolders]);
 
   return (
-    <Card className="transparent-item" style={{height: '100%'}}>
+    <Card className="transparent-item" style={{height: '100%', overflowY: 'scroll'}}>
       <Card.Header>{title}</Card.Header>
       <Card.Body>
         <ListGroup variant="flush" className="transparent-item">

@@ -41,7 +41,7 @@ export const Launch = (props: {
   return (
     <Container style={{ height: '100%' }} className="application">
       <Row style={{ minHeight: '75%' }}>
-        <Col style={{ height: '30rem', overflowY: 'scroll' }}>
+        <Col style={{ height: '30rem' }}>
           <ModList
             currPath={currPath}
             updateCurrPath={updateCurrPath}
@@ -54,7 +54,7 @@ export const Launch = (props: {
             title={t('AVAILABLE_MODS')}
           />
         </Col>
-        <Col style={{ maxHeight: '35em', overflowY: 'scroll' }}>
+        <Col style={{ maxHeight: '30rem' }}>
           <ModList
             currPath={currPath}
             updateCurrPath={updateCurrPath}
