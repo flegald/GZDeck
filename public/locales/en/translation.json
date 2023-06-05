@@ -1,6 +1,6 @@
 {
   "GZDOOM_NOT_FOUND": "GZDoom not found",
-  "INSTALL_GZDOOM": "Please install GZDoom via the Discovery app,",
+  "INSTALL_GZDOOM": "Please install GZDoom Flatpak via the Discovery app",
   "ACTIVE_MODS": "Active Mods",
   "AVAILABLE_MODS": "Available Mods",
   "LAUNCH": "Launch",
@@ -8,5 +8,6 @@
   "SET_IWAD": "Set IWAD",
   "NONE": "None",
   "AVAILABLE_IWADS": "Available IWADS",
-  "OK": "Ok"
+  "OK": "Ok",
+  "EXIT": "EXIT"
 }

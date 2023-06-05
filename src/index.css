@@ -9,7 +9,12 @@ html * {
 }
 
 .transparent-item {
-    background: rgba(228, 214, 221, 0.9);
+    /*background: rgba(228, 214, 221, 0.9);*/
+}
+
+.glass-background {
+    background-color: rgba(255, 255, 255, .15);
+    backdrop-filter: blur(5px);
 }
 
 .custom-button {

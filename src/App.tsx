@@ -55,7 +55,6 @@ export function App() {
     setChildFolders(results);
   };
 
-
   const fetchSettings = async () => {
     const results = await window.Main.initSettings();
     setSettings(results);
@@ -103,10 +102,13 @@ export function App() {
           spinner={<Spinner animation="border" />}
         >
           {!engineInstalled && isInitialized && (
-            <ErrorAlert
-              errorTitle={t('GZDOOM_NOT_FOUND')}
-              errorBody={t('INSTALL_GZDOOM')}
-            />
+            <>
+              <ErrorAlert
+                errorTitle={t('GZDOOM_NOT_FOUND')}
+                errorBody={t('INSTALL_GZDOOM')}
+                showExit={true}
+              />
+            </>
           )}
           {settings && engineInstalled && (
             <Launch

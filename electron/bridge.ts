@@ -16,8 +16,12 @@ const exec = require('await-exec');
 
 export const api = {
   engineSearch: async (): Promise<boolean> => {
-    const response = await exec(FLATPAK_LIST_COMMAND);
-    return !!response.stdout;
+    try{
+      const response = await exec(FLATPAK_LIST_COMMAND);
+      return !!response.stdout;
+    } catch (e) {
+      return false
+    }
   },
 
   initFileStructure: (): void => {

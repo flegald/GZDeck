@@ -7,6 +7,7 @@ import Container from 'react-bootstrap/Container';
 import { SettingsInterface } from './types';
 import { useTranslation } from 'react-i18next';
 import { ModFile } from '../../types';
+import EternalItem from '../../components/EternalItem';
 
 export const Launch = (props: {
   mods: ModFile[];
@@ -20,7 +21,15 @@ export const Launch = (props: {
   const [selectedMods, setSelectedMods] = useState<ModFile[]>([]);
   const [selectedIwad, setSelectedIwad] = useState<string>('');
   const { t } = useTranslation('common', { useSuspense: false });
-  const { mods, iwads, settings, getFocusableElements, childFolders, updateCurrPath, currPath } = props;
+  const {
+    mods,
+    iwads,
+    settings,
+    getFocusableElements,
+    childFolders,
+    updateCurrPath,
+    currPath,
+  } = props;
 
   useEffect(() => {
     if (settings.previousRun.iwad) {
@@ -48,7 +57,7 @@ export const Launch = (props: {
             childFolders={childFolders}
             getFocusableElements={getFocusableElements}
             selectedMods={selectedMods}
-            inputCategory='left'
+            inputCategory="left"
             onSelect={updateSelectedMods}
             mods={mods}
             title={t('AVAILABLE_MODS')}
@@ -61,14 +70,13 @@ export const Launch = (props: {
             childFolders={childFolders}
             getFocusableElements={getFocusableElements}
             selectedMods={selectedMods}
-            inputCategory='right'
+            inputCategory="right"
             mods={selectedMods}
             title={t('ACTIVE_MODS')}
             onSelect={updateSelectedMods}
           />
         </Col>
       </Row>
-      <br />
       <LaunchBar
         iwads={iwads}
         selectedMods={selectedMods}

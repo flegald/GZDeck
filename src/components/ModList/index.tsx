@@ -4,6 +4,8 @@ import Card from 'react-bootstrap/Card';
 import { ModListProps } from './types';
 import fileIcon from '../../assets/images/folder-icon.png';
 import { ModFile } from '../../types';
+import './mod-list.css';
+import { FormCheck } from 'react-bootstrap';
 
 export const ModList = (props: ModListProps): ReactElement => {
   const [titleList, setTitleList] = useState<ReactElement[]>([]);
@@ -23,7 +25,7 @@ export const ModList = (props: ModListProps): ReactElement => {
   const generateFolderText = (name: string): ReactElement => {
     return (
       <ListGroup.Item
-        className="transparent-item"
+        className="eternal-item"
         data-inputcategory={inputCategory}
         action
         as="button"
@@ -38,25 +40,11 @@ export const ModList = (props: ModListProps): ReactElement => {
   };
 
   const generateRowText = (modFile: ModFile): ReactElement => {
-    let rowText: string | ReactElement = modFile.name;
-    let isActive = false;
-    if (inputCategory === 'left') {
-      isActive = selectedMods.map(f => f.name).includes(modFile.name);
-      const prefix = isActive ? (
-        <span className="remove-icon">[-]</span>
-      ) : (
-        <span className="add-icon">[+]</span>
-      );
-      rowText = (
-        <span>
-          {prefix} {modFile.name}
-        </span>
-      );
-    }
+    let isActive = selectedMods.map(f => f.name).includes(modFile.name);
 
     return (
       <ListGroup.Item
-        className="transparent-item"
+        className="eternal-item"
         data-inputcategory={inputCategory}
         action
         as="button"
@@ -66,7 +54,7 @@ export const ModList = (props: ModListProps): ReactElement => {
           onSelect && onSelect(modFile);
         }}
       >
-        {rowText}
+        <FormCheck checked={isActive} label={modFile.name} />
       </ListGroup.Item>
     );
   };
@@ -86,13 +74,16 @@ export const ModList = (props: ModListProps): ReactElement => {
   }, [titleList, childFolders]);
 
   return (
-    <Card className="transparent-item" style={{height: '100%', overflowY: 'scroll'}}>
+    <Card
+      className="glass-background"
+      style={{ height: '100%', overflowY: 'scroll' }}
+    >
       <Card.Header>{title}</Card.Header>
       <Card.Body>
-        <ListGroup variant="flush" className="transparent-item">
+        <ListGroup variant="flush">
           {currPath !== '/mods' && inputCategory === 'left' && (
             <ListGroup.Item
-              className="transparent-item"
+              // className="transparent-item"
               data-inputcategory={inputCategory}
               action
               as="button"

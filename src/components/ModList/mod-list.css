@@ -1,0 +1,40 @@
+
+.eternal-item {
+    color: white !important;
+    padding-left: 50px !important;
+    transition: all 1s;
+    -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 5% 100%);
+    border: #BBCC86 solid 4px !important;
+    background: repeating-linear-gradient(
+            180deg,
+            #BBCC86,
+            #282C1C,
+            #282C1C,
+            #282C1C,
+            #282C1C,
+            #282C1C,
+            #282C1C,
+            #282C1C,
+            #BBCC86
+    );
+}
+
+.eternal-item >*>* {
+    color: white !important;
+}
+
+.eternal-item:focus {
+    background: repeating-linear-gradient(
+            180deg,
+            #F6DA7A,
+            #E1731E,
+            #E1731E,
+            #E1731E,
+            #E1731E,
+            #E1731E,
+            #E1731E,
+            #E1731E,
+            #F6DA7A
+    );
+    border: #F6DA7A solid 4px !important;
+}
