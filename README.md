@@ -1,3 +1,7 @@
+**No Longer In Developement**
+
+Please feel free to fork and make better
+
 # GZDeck
 
 A Mod Launcher for GZDoom flatpak version, specifically targeting the Steam Deck
