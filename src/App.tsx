@@ -32,7 +32,11 @@ export function App() {
   };
 
   const engineSearch = async (): Promise<void> => {
-    setEngineInstalled(await window.Main.engineSearch());
+    try {
+      setEngineInstalled(await window.Main.engineSearch());
+    } catch (error) {
+      setEngineInstalled(false);
+    }
   };
 
   const iwadSearch = async (): Promise<void> => {
